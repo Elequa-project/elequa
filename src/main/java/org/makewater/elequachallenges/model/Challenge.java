@@ -75,23 +75,23 @@ public class Challenge {
         this.user = user;
     }
 
-    public Challenge(int id, String name, String body, Timestamp createDate, Timestamp modifiedDate, User user, Category cat) {
+    public Challenge(int id, String name, String body, Timestamp createDate, Timestamp modifiedDate, User user, Category category) {
         this.id = id;
         this.name = name;
         this.body = body;
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;
         this.user = user;
-        this.category = cat;
+        this.category = category;
     }
 
-    public Challenge(String name, String body, Timestamp createDate, Timestamp modifiedDate, User user, Category cat) {
+    public Challenge(String name, String body, Timestamp createDate, Timestamp modifiedDate, User user, Category category) {
         this.name = name;
         this.body = body;
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;
         this.user = user;
-        this.category = cat;
+        this.category = category;
     }
 
     // Getters and setters
@@ -143,12 +143,12 @@ public class Challenge {
         this.user = user;
     }
 
-    public Category getCat() {
+    public Category getCategory() {
         return this.category;
     }
 
-    public void setCat(Category cat) {
-        this.category = cat;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
 }
