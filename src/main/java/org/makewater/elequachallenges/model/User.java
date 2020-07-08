@@ -1,6 +1,8 @@
 package org.makewater.elequachallenges.model;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.*;
 
@@ -37,6 +39,12 @@ public class User {
     @Column(name = "create_date", updatable = false)
     @CreationTimestamp
     private Timestamp createDate;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Challenge> challenges = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Submission> submissions = new ArrayList<>();
 
     // Constructors
     public User() {}
