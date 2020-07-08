@@ -28,8 +28,6 @@ target/
 build/
 
 ### VS Code ###
-.vscode
+.vscode/
 
-
-application.properties
-
+src/main/resources/application.properties
