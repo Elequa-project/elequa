@@ -65,7 +65,6 @@ public class Challenge {
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;
     }
-
     public Challenge(int id, String name, String body, Timestamp createDate, Timestamp modifiedDate, User user) {
         this.id = id;
         this.name = name;
