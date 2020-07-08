@@ -34,7 +34,7 @@ public class Challenge {
 
     @ManyToOne
     @JoinColumn(name = "cat_id")
-    private Category cat;
+    private Category category;
 
     // Constructors
     public Challenge() {
