@@ -21,19 +21,22 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private int zip;
 
-    @Column(name = "is_admin", nullable = false)
+    @Column(name = "is_admin", nullable = false, columnDefinition = "boolean default false")
     private Boolean isAdmin = false;
 
-    @Column(name = "solution_count")
+    @Column(name = "solution_count", columnDefinition = "int default 0")
     private int solutionCount;
 
     @Column(name = "create_date", updatable = false)
@@ -70,50 +73,63 @@ public class User {
         this.lastName = lastName;
         this.username = username;
     }
-    
-    public User(int id, String firstName, String lastName, String username, String email) {
+
+    public User(int id, String firstName, String lastName, String username, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
+    }
+    
+    public User(int id, String firstName, String lastName, String username, String password, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
         this.email = email;
     }
 
-    public User(int id, String firstName, String lastName, String username, String email, int zip) {
+    public User(int id, String firstName, String lastName, String username,String password, String email, int zip) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.zip = zip;
     }
 
-    public User(int id, String firstName, String lastName, String username, String email, int zip, Boolean isAdmin) {
+    public User(int id, String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.zip = zip;
         this.isAdmin = isAdmin;
     }
 
-    public User(int id, String firstName, String lastName, String username, String email, int zip, Boolean isAdmin, int solutionCount) {
+    public User(int id, String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin, int solutionCount) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.zip = zip;
         this.isAdmin = isAdmin;
         this.solutionCount = solutionCount;
     }
 
-    public User(int id, String firstName, String lastName, String username, String email, int zip, Boolean isAdmin, int solutionCount, Timestamp createDate) {
+    public User(int id, String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin, int solutionCount, Timestamp createDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.zip = zip;
         this.isAdmin = isAdmin;
@@ -121,10 +137,11 @@ public class User {
         this.createDate = createDate;
     }
 
-    public User(String firstName, String lastName, String username, String email, int zip, Boolean isAdmin, int solutionCount, Timestamp createDate) {
+    public User(String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin, int solutionCount, Timestamp createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
         this.email = email;
         this.zip = zip;
         this.isAdmin = isAdmin;
@@ -163,6 +180,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
