@@ -23,12 +23,18 @@ public class MedalController {
     }
 
     @GetMapping(path = "/medal/{id}")
-    public Medal getMedal(@PathVariable int id){
-        return medalRepo.getOne(id);
+    public Medal getMedal(@PathVariable int id) {
+        return medalRepo.findById(id);
     }
 
     @PostMapping(path = "/medals")
     public Medal addMedal(Medal medal){
+        medalRepo.save(medal);
+        return medal;
+    }
+
+    @PutMapping(path = "/submission/edit/{id}")
+    public Medal editMedal(Medal medal) {
         medalRepo.save(medal);
         return medal;
     }
