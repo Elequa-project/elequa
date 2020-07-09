@@ -34,7 +34,7 @@ public class UserController {
 
     // Add a new user -- user registration
     @PostMapping("/user/add")
-    public void addUser(@RequestBody User user) {
+    public User addUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepo.save(user);
