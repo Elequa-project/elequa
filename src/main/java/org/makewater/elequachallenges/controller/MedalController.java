@@ -33,7 +33,7 @@ public class MedalController {
         return medal;
     }
 
-    @PutMapping(path = "/submission/edit/{id}")
+    @PutMapping(path = "/medal/edit/{id}")
     public Medal editMedal(Medal medal) {
         medalRepo.save(medal);
         return medal;

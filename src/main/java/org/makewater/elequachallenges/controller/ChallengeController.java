@@ -33,7 +33,7 @@ public class ChallengeController {
         return challenge;
     }
 
-    @PutMapping(path = "/submission/edit/{id}")
+    @PutMapping(path = "/challenge/edit/{id}")
     public Challenge editChallenge(Challenge challenge) {
         challengeRepo.save(challenge);
         return challenge;
