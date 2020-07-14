@@ -36,10 +36,12 @@ class Login extends React.Component {
             .executeJwtAuthenticationService(this.state.username, this.state.password)
             .then((response) => {
                 AuthenticationService.registerSuccessfulLoginForJwt(this.state.username, response.data.token)
-                this.props.history.push(`/welcome/${this.state.username}`)
+                this.props.history.push(`/submissions/${this.state.username}`)
             }).catch(() => {
             this.setState({showSuccessMessage: false});
             this.setState({hasLoginFailed: true});
+            this.setState({password: ""});
+
         })
 
     }
@@ -67,27 +69,34 @@ class Login extends React.Component {
             //         </MuiThemeProvider>
             //     </div>
             // )
-            <div>
-                <MuiThemeProvider className="container">
+            <div  >
+                <MuiThemeProvider >
                 <AppBar>Login</AppBar>
                     {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
                     {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials</div>}
                     {this.state.showSuccessMessage && <div>Login Sucessful</div>}
                     {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
-                   <TextField type="text" name="username" hintText="Enter your username" floatingLabelText="Username"  value={this.state.username}
+                   <div style={style}>
+
+                    <TextField  type="text" name="username" hintText="Enter your username" floatingLabelText="Username"  value={this.state.username}
                                       onChange={this.handleChange}/>
                     <br/>
                     <TextField type="password" name="password" hintText="Enter your password" floatingLabelText="Password"  value={this.state.password}
                                onChange={this.handleChange}/>
+                               <br/>
+                    <RaisedButton label="Submit" primary={true}  onClick={this.loginClicked}/>
                     <br/>
-                    <RaisedButton label="Submit" primary={true} style={style} onClick={this.loginClicked}/>
+                   </div>
                 </MuiThemeProvider>
             </div>
         )
     }
 }
-const style = {
-    margin: 15,
+const style={
+    position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)'
 };
 
 export default Login;

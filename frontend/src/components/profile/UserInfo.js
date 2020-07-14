@@ -5,7 +5,7 @@ import { Container } from '@material-ui/core';
 export default class UserInfo extends Component  {
     state = {
         user: {}
-    }
+    };
 
     componentDidMount() {
         axios.get('/api/user/2')
