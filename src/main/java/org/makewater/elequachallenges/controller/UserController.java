@@ -44,8 +44,8 @@ public class UserController {
 
     // Display single user by ID -- user profile
     @GetMapping("/user/{id}")
-    public User findSingleUser(@PathVariable int id) {
-        return userRepo.findById(id);
+    public User findSingleUser(@PathVariable Long id) {
+        return userRepo.getOne(id);
     }
 
     // Edit user information/profile
@@ -60,7 +60,7 @@ public class UserController {
 
     // Delete user
     @DeleteMapping("/user/delete/{id}")
-    public void deleteEmployee(@PathVariable int id) {
+    public void deleteEmployee(@PathVariable Long id) {
         User user = findSingleUser(id);
 
         userRepo.delete(user);
