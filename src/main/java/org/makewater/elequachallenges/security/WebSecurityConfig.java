@@ -1,5 +1,7 @@
 package org.makewater.elequachallenges.security;
 
+import org.makewater.elequachallenges.security.jwt.AuthEntryPointJwt;
+import org.makewater.elequachallenges.security.jwt.AuthTokenFilter;
 import org.makewater.elequachallenges.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.makewater.elequachallenges.security.jwt.AuthEntryPointJwt;
 
 
 
@@ -26,7 +27,7 @@ import org.makewater.elequachallenges.security.jwt.AuthEntryPointJwt;
         prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+   UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
@@ -64,3 +65,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
+

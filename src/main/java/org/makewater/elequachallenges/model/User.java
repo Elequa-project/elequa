@@ -1,8 +1,14 @@
 package org.makewater.elequachallenges.model;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 
 import javax.persistence.*;
 
@@ -11,11 +17,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "users")
+@Table(	name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -34,17 +41,20 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private int zip;
+    private Long zip;
 
-    @Column(name = "is_admin", nullable = false, columnDefinition = "boolean default false")
-    private Boolean isAdmin = false;
-
-    @Column(name = "solution_count", columnDefinition = "int default 0")
-    private int solutionCount;
+    @Column(name = "solution_count")
+    private Long solutionCount;
 
     @Column(name = "create_date", updatable = false)
     @CreationTimestamp
     private Timestamp createDate;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Challenge> challenges = new ArrayList<>();
@@ -55,56 +65,46 @@ public class User {
     // Constructors
     public User() {}
 
-    public User(int id) {
+    public User(Long id) {
         this.id = id;
     }
 
-    public User(int id, String firstName) {
+    public User(Long id, String firstName) {
         this.id = id;
         this.firstName = firstName;
-    }
-    
-    public User(int id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
-    public User(int id, String firstName, String lastName, String username) {
+    public User(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
     }
 
-    public User(int id, String firstName, String lastName, String username, String password) {
+    public User(Long id, String firstName, String lastName, String username) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
     }
-    
-    public User(int id, String firstName, String lastName, String username, String password, String email) {
+
+    public User(Long id, String firstName, String lastName, String username, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.email = email;
     }
 
-    public User(int id, String firstName, String lastName, String username,String password, String email, int zip) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.zip = zip;
     }
 
-    public User(int id, String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email, Long zip) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -112,10 +112,9 @@ public class User {
         this.password = password;
         this.email = email;
         this.zip = zip;
-        this.isAdmin = isAdmin;
     }
 
-    public User(int id, String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin, int solutionCount) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email, Long zip, Long solutionCount) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -123,11 +122,11 @@ public class User {
         this.password = password;
         this.email = email;
         this.zip = zip;
-        this.isAdmin = isAdmin;
+
         this.solutionCount = solutionCount;
     }
 
-    public User(int id, String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin, int solutionCount, Timestamp createDate) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email, Long zip, Long solutionCount, Timestamp createDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -135,29 +134,34 @@ public class User {
         this.password = password;
         this.email = email;
         this.zip = zip;
-        this.isAdmin = isAdmin;
         this.solutionCount = solutionCount;
         this.createDate = createDate;
     }
 
-    public User(String firstName, String lastName, String username, String password, String email, int zip, Boolean isAdmin, int solutionCount, Timestamp createDate) {
+    public User(String firstName, String lastName, String username, String password, String email, Long zip, Long solutionCount, Timestamp createDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
         this.zip = zip;
-        this.isAdmin = isAdmin;
         this.solutionCount = solutionCount;
         this.createDate = createDate;
+    }
+
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+
     }
 
     // Getters and setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -201,27 +205,20 @@ public class User {
         this.email = email;
     }
 
-    public int getZip() {
+    public Long getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(Long zip) {
         this.zip = zip;
     }
 
-    public Boolean getIsAdmin() {
-        return isAdmin;
-    }
 
-    public void setIsAdmin(Boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
-    public int getSolutionCount() {
+    public Long getSolutionCount() {
         return solutionCount;
     }
 
-    public void setSolutionCount(int solutionCount) {
+    public void setSolutionCount(Long solutionCount) {
         this.solutionCount = solutionCount;
     }
 
@@ -232,4 +229,13 @@ public class User {
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
+
