@@ -1,5 +1,10 @@
 package org.makewater.elequachallenges.controller;
 
+import java.util.List;
+
+import org.makewater.elequachallenges.model.User;
+import org.makewater.elequachallenges.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
+    @Autowired
+    UserRepository userRepository;
+    
     @GetMapping("/all")
-    public String allAccess() {
-        return "Public Content.";
+    // public String allAccess() {
+    //     return "Public Content.";
+    // }
+    public List<User> allUsers() {
+        return userRepository.findAll();
     }
 
     @GetMapping("/user")
