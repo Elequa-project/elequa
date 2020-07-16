@@ -1,10 +1,10 @@
 
 import React, { Component } from "react";
-// import AddEmployee from "./Components/AddEmployee";
 import { Route, BrowserRouter as Router } from "react-router-dom";
-import HelloWorld from "./components/HelloWorld";
-import Login from   "./components/login/Login"
-import Register from   "./components/registration/Register"
+import Login from   "./components/login.component";
+import Register from   "./components/register.component";
+import Profile from   "./components/profile.component";
+
 class App extends Component {
     render() {
         return (
@@ -13,6 +13,7 @@ class App extends Component {
                 <Route path="/" exact component={Login}/>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/profile" component={Profile} />
                 {/*<Route path="/submission/:id" component={TodoComponent}/>*/}
                 {/*<Route path="/submissions" component={ListTodosComponent}/>*/}
 
