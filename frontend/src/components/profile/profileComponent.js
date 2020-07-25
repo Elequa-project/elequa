@@ -16,6 +16,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Logout from "../logout";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {blueGrey} from "@material-ui/core/colors";
+import AuthService from "../../services/auth.service";
+
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -62,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
+        // background: 'white',
         width: '100%',
         [theme.breakpoints.up('md')]: {
             width: '20ch',
@@ -79,12 +83,15 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
+
+
 }));
 
-export default function PrimarySearchAppBar() {
+export default function Profile() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const currentUser = AuthService.getCurrentUser();
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -121,6 +128,7 @@ export default function PrimarySearchAppBar() {
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
+
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
@@ -164,8 +172,10 @@ export default function PrimarySearchAppBar() {
     );
 
     return (
+        <div>
         <MuiThemeProvider className={classes.grow}>
-            <AppBar position="static">
+            <AppBar position="static"
+            style={{background: '#4EBCD4'}}>
                 <Toolbar>
                     <IconButton
                         edge="start"
@@ -230,8 +240,41 @@ export default function PrimarySearchAppBar() {
             {renderMobileMenu}
             {renderMenu}
         </MuiThemeProvider>
+            <div>
+                <div className="container">
+                    <header className="jumbotron">
+                        <h3>
+                            <strong>{currentUser.username}</strong> Profile
+                        </h3>
+                        <br/>
+                        <h1> <Logout/> </h1>
+                    </header>
+                    <p>
+                        <strong>Token:</strong>{" "}
+                        {currentUser.accessToken.substring(0, 20)} ...{" "}
+                        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+                    </p>
+                    <p>
+                        <strong>Id:</strong>{" "}
+                        {currentUser.id}
+                    </p>
+                    <p>
+                        <strong>Email:</strong>{" "}
+                        {currentUser.email}
+                    </p>
+                    <strong>Authorities:</strong>
+                    <ul>
+                        {currentUser.roles &&
+                        currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     );
+
 }
+
 
 
 
@@ -271,9 +314,10 @@ export default function PrimarySearchAppBar() {
 
 
 const style={
-    position: 'absolute',
+   /* position: 'absolute',
     left: '50%',
     top: '50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)'*/
+   backgroundColor: 'rgb(0, 188, 212)'
 };
 

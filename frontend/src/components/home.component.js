@@ -25,7 +25,7 @@ export default class Home extends Component {
             error.message ||
             error.toString()
         });
-      } 
+      }
     );
   }
 
@@ -33,7 +33,7 @@ export default class Home extends Component {
     return (
       <div className="container">
         <header className="jumbotron">
-          {this.state.content.map(user => 
+          {this.state.content.map(user =>
             <div>
                 <h2>Hello, { user.firstName + ' ' + user.lastName }!</h2>
                 <h3>Email: { user.email }</h3>
