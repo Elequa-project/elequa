@@ -4,32 +4,19 @@ import { Route, BrowserRouter as Router } from "react-router-dom";
 import Home from   "./components/home.component";
 import Login from   "./components/login/Login"
 import Register from   "./components/registration/Register";
-import Profile from   "./components/profile.component";
+import Profile from "./components/profile/profileComponent";
+import SplashPage from "./components/SplashPage";
+import AuthService from "./services/auth.service";
 
 class App extends Component {
     render() {
         return (
             <Router>
-                {/*<Route exact path="/" component={HelloWorld} />*/}
-                <Route path="/" exact component={Home}/>
+                <Route path="/" exact component={SplashPage}/>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/profile" component={Profile} />
-                {/*<Route path="/submission/:id" component={TodoComponent}/>*/}
-                {/*<Route path="/submissions" component={ListTodosComponent}/>*/}
-
             </Router>
-
-    //         <Switch>
-    //         <Route path="/" exact component={LoginComponent}/>
-    //     <Route path="/login" component={LoginComponent}/>
-    //     <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent}/>
-    //     <AuthenticatedRoute path="/todos/:id" component={TodoComponent}/>
-    //     <AuthenticatedRoute path="/todos" component={ListTodosComponent}/>
-    //     <AuthenticatedRoute path="/logout" component={LogoutComponent}/>
-    //
-    //     <Route component={ErrorComponent}/>
-    // </Switch>
         );
     }
 }
