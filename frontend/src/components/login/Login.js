@@ -55,7 +55,13 @@ class Login extends React.Component {
         });
     }
 
-
+    componentDidMount() {
+        if (AuthService.getCurrentUser()) {
+            // redirect the user
+            this.props.history.push("/profile");
+            window.location.reload();
+        }
+    }
 
     handleLogin(e) {
         e.preventDefault();

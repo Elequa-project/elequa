@@ -67,6 +67,14 @@ class Register extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (AuthService.getCurrentUser()) {
+            // redirect the user
+            this.props.history.push("/profile");
+            window.location.reload();
+        }
+    }
+
     onChangeUsername(e) {
         this.setState({
             username: e.target.value
