@@ -91,6 +91,8 @@ export default function Profile() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+
     const currentUser = AuthService.getCurrentUser();
 
     const isMenuOpen = Boolean(anchorEl);
