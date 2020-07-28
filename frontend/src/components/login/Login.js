@@ -11,15 +11,23 @@ import AuthService from "../../services/auth.service";
 import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
 
-
-
+// can use these instead
+// function Login(){}
+// const Login = () =>{
 class Login extends React.Component {
+//         const[username, setUsername] = React.useState('');
+//         const[password, setPassword] = React.useState('');
+//         const[loading, setLoading] = React.useState(false);
+//         const[message, setMessage] = React.useState('');
+
+
 
     constructor(props) {
         super(props);
         this.handleLogin = this.handleLogin.bind(this);
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+
 
         this.state = {
             username: "",
@@ -29,16 +37,31 @@ class Login extends React.Component {
         };
     }
 
+
+
+
+
+
     onChangeUsername(e) {
         this.setState({
             username: e.target.value
         });
     }
 
+
     onChangePassword(e) {
         this.setState({
             password: e.target.value
         });
+    }
+
+
+    componentDidMount() {
+        if (AuthService.getCurrentUser()) {
+            // redirect the user
+            this.props.history.push("/profile");
+            window.location.reload();
+        }
     }
 
     handleLogin(e) {
@@ -50,6 +73,7 @@ class Login extends React.Component {
         });
 
         this.form.validateAll();
+
 
         if (this.checkBtn.context._errors.length === 0) {
             AuthService.login(this.state.username, this.state.password).then(
@@ -77,6 +101,7 @@ class Login extends React.Component {
             });
         }
     }
+
 
     render() {
         return (
