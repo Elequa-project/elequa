@@ -87,12 +87,13 @@ class Login extends React.Component {
                     {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials</div>}
                     {this.state.showSuccessMessage && <div>Login Sucessful</div>}
                     {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
-                   <Form onSubmit={this.handleLogin}
+                   <Form style={style} onSubmit={this.handleLogin}
                          ref={c => {
                              this.form = c;
                          }}
-                         validate>
-                    <div style={style}>
+                         validate
+                   >
+                    {/*<div style={style}>*/}
 
                     <TextField  type="text"
                                 name="username"
@@ -125,7 +126,7 @@ class Login extends React.Component {
                                this.checkBtn = c;
                            }}
                        />
-                   </div>
+                   {/*</div>*/}
                        </Form>
             </Container>
                 </MuiThemeProvider>
