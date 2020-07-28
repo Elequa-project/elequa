@@ -2,48 +2,64 @@ import AuthService from "../../services/auth.service";
 import * as React from "react";
 import {Link} from "@material-ui/core";
 import {useState} from "react";
+import {useEffect} from "react";
 
-class Logout extends React.Component {
-
-
-    constructor(props) {
-        super(props);
-        this.logOut = this.logOut.bind(this);
-
-        this.state = {
-            showModeratorBoard: false,
-            showAdminBoard: false,
-            currentUser: undefined
-        };
-    }
+const Logout = (props) => {
 
 
+    // constructor(props) {
+    //     super(props);
+    //     this.logOut = this.logOut.bind(this);
+    //
+    //     this.state = {
+    //         showModeratorBoard: false,
+    //         showAdminBoard: false,
+    //         currentUser: undefined
+    //     };
+    // }
 
-    componentDidMount() {
-        const user = AuthService.getCurrentUser();
+    const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+    const [showAdminBoard, setShowAdminBoard] = useState(false);
+    const [currentUser, setCurrentUser] = useState('');
 
+
+
+    useEffect(() =>{
+        const user = AuthService.getCurrentUser()
         if (user) {
-            this.setState({
-                currentUser: user,
-                showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-                showAdminBoard: user.roles.includes("ROLE_ADMIN")
-            });
+
+                setCurrentUser(user);
+                setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+                setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+
         }
-    }
 
-    logOut() {
+    });
+
+    // componentDidMount() {
+    //     const user = AuthService.getCurrentUser();
+    //
+    //     if (user) {
+    //         this.setState({
+    //             currentUser: user,
+    //             showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+    //             showAdminBoard: user.roles.includes("ROLE_ADMIN")
+    //         });
+    //     }
+    // }
+
+    const logOut = () => {
         AuthService.logout();
-    }
+    };
 
-    render(){
+
         return (
-            <Link underline='none' href="/login" className="nav-link" onClick={this.logOut}>
+            <Link underline='none' href="/login" className="nav-link" onClick={logOut}>
                 LogOut
             </Link>
 
         )
-    }
-}
+};
 
 
 export default Logout;
