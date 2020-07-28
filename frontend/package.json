@@ -41,6 +41,7 @@
   },
   "proxy": "http://localhost:8080",
   "devDependencies": {
+    "material-ui-banner": "^1.4.3",
     "react-tap-event-plugin": "^3.0.3"
   }
 }

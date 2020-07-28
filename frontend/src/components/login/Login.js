@@ -55,6 +55,7 @@ class Login extends React.Component {
         });
     }
 
+
     componentDidMount() {
         if (AuthService.getCurrentUser()) {
             // redirect the user

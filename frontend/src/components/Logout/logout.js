@@ -1,7 +1,10 @@
-import AuthService from "../services/auth.service";
+import AuthService from "../../services/auth.service";
 import * as React from "react";
+import {Link} from "@material-ui/core";
+import {useState} from "react";
 
 class Logout extends React.Component {
+
 
     constructor(props) {
         super(props);
@@ -13,6 +16,8 @@ class Logout extends React.Component {
             currentUser: undefined
         };
     }
+
+
 
     componentDidMount() {
         const user = AuthService.getCurrentUser();
@@ -32,12 +37,13 @@ class Logout extends React.Component {
 
     render(){
         return (
-            <a href="/login" className="nav-link" onClick={this.logOut}>
+            <Link underline='none' href="/login" className="nav-link" onClick={this.logOut}>
                 LogOut
-            </a>
+            </Link>
 
         )
     }
 }
+
 
 export default Logout;
