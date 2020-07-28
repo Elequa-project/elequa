@@ -20,11 +20,11 @@ const style= {
     marginTop: '10px',
     height: '400px'
 };
-const currentUser = AuthService.getCurrentUser();
 
 
 export default function AutoGrid() {
     const classes = useStyles();
+const currentUser = AuthService.getCurrentUser();
 
     return (
         <div className={classes.root}>
