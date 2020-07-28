@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import AuthService from "../../services/auth.service";
 import Container from "@material-ui/core/Container";
-import Form from "react-validation/build/form";
 import {isEmail} from "validator";
-import CheckButton from "react-validation/build/button";
+import {useForm} from "react-hook-form";
 
 const required = value => {
     if (!value) {
@@ -49,74 +48,103 @@ const vpassword = value => {
     }
 };
 
-class Register extends React.Component {
-    constructor(props){
-        super(props);
-        this.handleRegister = this.handleRegister.bind(this);
-        this.onChangeUsername = this.onChangeUsername.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+const Register = (props) => { 
+// class Register extends React.Component {
+    // constructor(props){
+    //     super(props);
+    //     this.handleRegister = this.handleRegister.bind(this);
+    //     this.onChangeUsername = this.onChangeUsername.bind(this);
+    //     this.onChangeEmail = this.onChangeEmail.bind(this);
+    //     this.onChangePassword = this.onChangePassword.bind(this);
 
-        this.state={
-            firstName:'',
-            lastName:'',
-            username:'',
-            email:'',
-            password:'',
-            zip:''
-        }
-    }
+    //     this.state={
+    //         firstName:'',
+    //         lastName:'',
+    //         username:'',
+    //         email:'',
+    //         password:'',
+    //         zip:''
+    //     }
+    // }
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [username, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [zip, setZip] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const [successful, setSuccessful] = useState(false);
+    const {register} = useForm();
 
-    componentDidMount() {
+    useEffect(() => {
         if (AuthService.getCurrentUser()) {
             // redirect the user
-            this.props.history.push("/profile");
+            props.history.push("/profile");
             window.location.reload();
         }
+    });
+
+    // componentDidMount() {
+    //     if (AuthService.getCurrentUser()) {
+    //         // redirect the user
+    //         props.history.push("/profile");
+    //         window.location.reload();
+    //     }
+    // }
+
+    const onChangeFirstName = (e) => {
+        setFirstName(e.target.value);
     }
 
-    onChangeUsername(e) {
-        this.setState({
-            username: e.target.value
-        });
+    const onChangeLastName = (e) => {
+        setLastName(e.target.value);
     }
 
-    onChangeEmail(e) {
-        this.setState({
-            email: e.target.value
-        });
+    const onChangeUsername = (e) => {
+        setUserName(e.target.value);
     }
 
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value
-        });
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
     }
 
-    handleRegister(e) {
+    const onChangePassword = (e)=> {
+        setPassword(e.target.value);
+    }
+
+    const onChangeZip = (e) => {
+        setZip(e.target.value);
+    }
+
+    const handleRegister = (e) => {
         e.preventDefault();
 
-        this.setState({
-            message: "",
-            successful: false
-        });
+        // this.setState({
+        //     message: "",
+        //     successful: false
+        // });
+        setMessage('');
+        setSuccessful(false);
 
-        this.form.validateAll();
+        // this.form.validateAll();
 
-        if (this.checkBtn.context._errors.length === 0) {
+        // if (this.checkBtn.context._errors.length === 0) {
             AuthService.register(
-                this.state.firstName,
-                this.state.lastName,
-                this.state.username,
-                this.state.email,
-                this.state.password,
-                this.state.zip
+                firstName,
+                lastName,
+                username,
+                email,
+                password,
+                zip
             ).then(
                 response => {
-                    this.setState({
-                        message: response.data.message,
-                        successful: true
-                    });
+                    // this.setState({
+                    //     message: response.data.message,
+                    //     successful: true
+                    // });
+                    setMessage(response.data.message);
+                    setSuccessful(true);
                 },
                 error => {
                     const resMessage =
@@ -126,131 +154,130 @@ class Register extends React.Component {
                         error.message ||
                         error.toString();
 
-                    this.setState({
-                        successful: false,
-                        message: resMessage
-                    });
+                    // this.setState({
+                    //     successful: false,
+                    //     message: resMessage
+                    // });
+
+                    setSuccessful(false);
+                    setMessage(resMessage);
                 }
             );
-        }
+        // }
     }
 
-    render() {
+    // render() {
         return (
                 <MuiThemeProvider>
                         <AppBar title="Register"/>
 
                     <Container>
-                        <Form style={style} onSubmit={this.handleRegister}
-                                      ref={c => {
-                                          this.form = c;
-                                      }}
-                                      noValidate>
+                        <form style={style} onSubmit={handleRegister} noValidate>
 
-                        <TextField
-                            type="text"
-                            name="firstName"
-                            value={this.state.firstName}
-                            hintText="Enter your First Name"
-                            floatingLabelText="First Name"
-                            onChange = {(event) => this.setState({firstName:event.target.value})}
-                            validations={[required]}
-
-                        />
-                        <br/>
-                        <TextField
-                            type="text"
-                            name="lastName"
-                            value={this.state.lastName}
-                            hintText="Enter your Last Name"
-                            floatingLabelText="Last Name"
-                            onChange = {(event) => this.setState({lastName:event.target.value})}
+                            <TextField
+                                type="text"
+                                name="firstName"
+                                value={firstName}
+                                hintText="Enter your First Name"
+                                floatingLabelText="First Name"
+                                onChange={onChangeFirstName}
+                                validations={[required]}
+                                inputRef={register}
                             />
                             <br/>
+                            <TextField
+                                type="text"
+                                name="lastName"
+                                value={lastName}
+                                hintText="Enter your Last Name"
+                                floatingLabelText="Last Name"
+                                onChange={onChangeLastName}
+                                inputRef={register}
+                            />
+                                <br/>
 
-                        <TextField
-                            type="text"
-                            name="username"
-                            label="username"
-                            value={this.state.username}
-                            hintText="Enter your  Username"
-                            floatingLabelText="Username"
-                            onChange = {(event) => this.setState({username:event.target.value})}
-                            validations={[required]}
-
-                        />
-                        <br/>
-                        <TextField
-                            type="email"
-                            name="email"
-                            label="email"
-                            value={this.state.email}
-                            hintText="Enter your email"
-                            floatingLabelText="Email"
-                            onChange = {(event) => this.setState({email:event.target.value})}
-                            validations={[required]}
-
-                        />
-                        <br/>
-                        <TextField
-                            type="password"
-                            name="password"
-                            label="password"
-                            value={this.state.password}
-                            hintText="Enter your password"
-                            floatingLabelText="Password"
-                            onChange = {(event) => this.setState({password:event.target.value})}
-                            validations={[required]}
-
-                        />
-                        <br/>
-                        <TextField
-                            type="number"
-                            name="zip"
-                            label="zip"
-                            value={this.state.zip}
-                            hintText="Enter your zip"
-                            floatingLabelText="zip"
-                            onChange = {(event) => this.setState({zip:event.target.value})}
-                            validations={[required]}
-
-                        />
-
-                        <br/>
-                        <RaisedButton
-                            variant="contained"
-                            label="Submit"
-                            primary={true}
-                            type="submit"
-                        />
-
-                            {this.state.message && (
-                                <div className="form-group">
-                                    <div
-                                        className={
-                                            this.state.successful
-                                                ? "alert alert-success"
-                                                : "alert alert-danger"
-                                        }
-                                        role="alert"
-                                    >
-                                        {this.state.message}
-                                    </div>
-                                </div>
-                            )}
-                            <CheckButton
-                                style={{ display: "none" }}
-                                ref={c => {
-                                    this.checkBtn = c;
-                                }}
+                            <TextField
+                                type="text"
+                                name="username"
+                                label="username"
+                                value={username}
+                                hintText="Enter your  Username"
+                                floatingLabelText="Username"
+                                onChange = {onChangeUsername}
+                                validations={[required]}
+                                inputRef={register}
+                            />
+                            <br/>
+                            <TextField
+                                type="email"
+                                name="email"
+                                label="email"
+                                value={email}
+                                hintText="Enter your email"
+                                floatingLabelText="Email"
+                                onChange = {onChangeEmail}
+                                validations={[required]}
+                                inputRef={register}
+                            />
+                            <br/>
+                            <TextField
+                                type="password"
+                                name="password"
+                                label="password"
+                                value={password}
+                                hintText="Enter your password"
+                                floatingLabelText="Password"
+                                onChange = {onChangePassword}
+                                validations={[required]}
+                                inputRef={register}
+                            />
+                            <br/>
+                            <TextField
+                                type="number"
+                                name="zip"
+                                label="zip"
+                                value={zip}
+                                hintText="Enter your zip"
+                                floatingLabelText="zip"
+                                onChange = {onChangeZip}
+                                validations={[required]}
+                                inputRef={register}
                             />
 
-                </Form>
+                            <br/>
+                            <RaisedButton
+                                variant="contained"
+                                label="Submit"
+                                primary={true}
+                                type="submit"
+                            />
+
+                                {message && (
+                                    <div className="form-group">
+                                        <div
+                                            className={
+                                                successful
+                                                    ? "alert alert-success"
+                                                    : "alert alert-danger"
+                                            }
+                                            role="alert"
+                                        >
+                                            {message}
+                                        </div>
+                                    </div>
+                                )}
+                                {/* <CheckButton
+                                    style={{ display: "none" }}
+                                    ref={c => {
+                                        this.checkBtn = c;
+                                    }}
+                                /> */}
+                        </form>
                     </Container>
                 </MuiThemeProvider>
 
         );
-    }
+    // }
 
 }
 const style={
@@ -259,4 +286,5 @@ const style={
     top: '50%',
     transform: 'translate(-50%, -50%)'
 };
+
 export default Register;
