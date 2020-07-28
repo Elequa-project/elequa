@@ -49,23 +49,7 @@ const vpassword = value => {
 };
 
 const Register = (props) => { 
-// class Register extends React.Component {
-    // constructor(props){
-    //     super(props);
-    //     this.handleRegister = this.handleRegister.bind(this);
-    //     this.onChangeUsername = this.onChangeUsername.bind(this);
-    //     this.onChangeEmail = this.onChangeEmail.bind(this);
-    //     this.onChangePassword = this.onChangePassword.bind(this);
 
-    //     this.state={
-    //         firstName:'',
-    //         lastName:'',
-    //         username:'',
-    //         email:'',
-    //         password:'',
-    //         zip:''
-    //     }
-    // }
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [username, setUserName] = useState('');
@@ -84,14 +68,6 @@ const Register = (props) => {
             window.location.reload();
         }
     });
-
-    // componentDidMount() {
-    //     if (AuthService.getCurrentUser()) {
-    //         // redirect the user
-    //         props.history.push("/profile");
-    //         window.location.reload();
-    //     }
-    // }
 
     const onChangeFirstName = (e) => {
         setFirstName(e.target.value);
@@ -120,16 +96,9 @@ const Register = (props) => {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        // this.setState({
-        //     message: "",
-        //     successful: false
-        // });
         setMessage('');
         setSuccessful(false);
 
-        // this.form.validateAll();
-
-        // if (this.checkBtn.context._errors.length === 0) {
             AuthService.register(
                 firstName,
                 lastName,
@@ -163,10 +132,8 @@ const Register = (props) => {
                     setMessage(resMessage);
                 }
             );
-        // }
     }
 
-    // render() {
         return (
                 <MuiThemeProvider>
                         <AppBar title="Register"/>
@@ -266,18 +233,11 @@ const Register = (props) => {
                                         </div>
                                     </div>
                                 )}
-                                {/* <CheckButton
-                                    style={{ display: "none" }}
-                                    ref={c => {
-                                        this.checkBtn = c;
-                                    }}
-                                /> */}
                         </form>
                     </Container>
                 </MuiThemeProvider>
 
         );
-    // }
 
 }
 const style={
