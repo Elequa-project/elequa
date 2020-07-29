@@ -1,5 +1,5 @@
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import {fade, makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,10 +14,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Logout from "../logout";
+import Logout from "../Logout/logout";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {blueGrey} from "@material-ui/core/colors";
 import AuthService from "../../services/auth.service";
+import Jumbotron from "./ProfileBanner";
+import AutoGrid from "./profileGrid";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -91,6 +92,8 @@ export default function Profile() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+
     const currentUser = AuthService.getCurrentUser();
 
     const isMenuOpen = Boolean(anchorEl);
@@ -117,15 +120,15 @@ export default function Profile() {
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
             id={menuId}
             keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}><Logout /></MenuItem>
         </Menu>
     );
 
@@ -134,17 +137,17 @@ export default function Profile() {
     const renderMobileMenu = (
         <Menu
             anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
             id={mobileMenuId}
             keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
+                        <MailIcon/>
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
@@ -152,7 +155,7 @@ export default function Profile() {
             <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
                     <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
+                        <NotificationsIcon/>
                     </Badge>
                 </IconButton>
                 <p>Notifications</p>
@@ -164,7 +167,7 @@ export default function Profile() {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
+                    <AccountCircle/>
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -173,151 +176,123 @@ export default function Profile() {
 
     return (
         <div>
-        <MuiThemeProvider className={classes.grow}>
-            <AppBar position="static"
-            style={{background: '#4EBCD4'}}>
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        Material-UI
-                    </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
+            <MuiThemeProvider className={classes.grow}>
+                <AppBar position="static"
+                        style={{background: '#4EBCD4'}}>
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="open drawer"
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography className={classes.title} variant="h6" noWrap>
+                            Material-UI
+                        </Typography>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon/>
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{'aria-label': 'search'}}
+                            />
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div>
-                    <div className={classes.grow} />
-                    <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Logout badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Logout>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </div>
-                </Toolbar>
-            </AppBar>
-            {renderMobileMenu}
-            {renderMenu}
-        </MuiThemeProvider>
-            <div>
-                <div className="container">
-                    <header className="jumbotron">
-                        <h3>
-                            <strong>{currentUser.username}</strong> Profile
-                        </h3>
-                        <br/>
-                        <h1> <Logout/> </h1>
-                    </header>
-                    <p>
-                        <strong>Token:</strong>{" "}
-                        {currentUser.accessToken.substring(0, 20)} ...{" "}
-                        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-                    </p>
-                    <p>
-                        <strong>Id:</strong>{" "}
-                        {currentUser.id}
-                    </p>
-                    <p>
-                        <strong>Email:</strong>{" "}
-                        {currentUser.email}
-                    </p>
-                    <strong>Authorities:</strong>
-                    <ul>
-                        {currentUser.roles &&
-                        currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-                    </ul>
-                </div>
-            </div>
+                        <div className={classes.grow}/>
+                        <div className={classes.sectionDesktop}>
+                            <IconButton aria-label="show 4 new mails" color="inherit">
+                                <Logout badgeContent={4} color="secondary">
+                                    <MailIcon/>
+                                </Logout>
+                            </IconButton>
+                            <IconButton aria-label="show 17 new notifications" color="inherit">
+                                <Badge badgeContent={17} color="secondary">
+                                    <NotificationsIcon/>
+                                </Badge>
+                            </IconButton>
+                            <IconButton
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle/>
+                            </IconButton>
+                        </div>
+                        <div className={classes.sectionMobile}>
+                            <IconButton
+                                aria-label="show more"
+                                aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                onClick={handleMobileMenuOpen}
+                                color="inherit"
+                            >
+                                <MoreIcon/>
+                            </IconButton>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+                <Jumbotron/>
+                <AutoGrid/>
+                {renderMobileMenu}
+                {renderMenu}
+            </MuiThemeProvider>
         </div>
+
 
     );
 
 }
 
 
-
-
 // render() {
-  //   const { currentUser } = this.state;
-  //
-  //   return (
-  //     <div className="container">
-  //       <header className="jumbotron">
-  //         <h3>
-  //           <strong>{currentUser.username}</strong> Profile
-  //         </h3>
-  //           <br/>
-  //           <h1> <Logout/> </h1>
-  //       </header>
-  //       <p>
-  //         <strong>Token:</strong>{" "}
-  //         {currentUser.accessToken.substring(0, 20)} ...{" "}
-  //         {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-  //       </p>
-  //       <p>
-  //         <strong>Id:</strong>{" "}
-  //         {currentUser.id}
-  //       </p>
-  //       <p>
-  //         <strong>Email:</strong>{" "}
-  //         {currentUser.email}
-  //       </p>
-  //       <strong>Authorities:</strong>
-  //       <ul>
-  //         {currentUser.roles &&
-  //           currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-  //       </ul>
-  //     </div>
-  //   );
-  // }
+//   const { currentUser } = this.state;
+//
+//   return (
+//     <div className="container">
+//       <header className="jumbotron">
+//         <h3>
+//           <strong>{currentUser.username}</strong> Profile
+//         </h3>
+//           <br/>
+//           <h1> <Logout/> </h1>
+//       </header>
+//       <p>
+//         <strong>Token:</strong>{" "}
+//         {currentUser.accessToken.substring(0, 20)} ...{" "}
+//         {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+//       </p>
+//       <p>
+//         <strong>Id:</strong>{" "}
+//         {currentUser.id}
+//       </p>
+//       <p>
+//         <strong>Email:</strong>{" "}
+//         {currentUser.email}
+//       </p>
+//       <strong>Authorities:</strong>
+//       <ul>
+//         {currentUser.roles &&
+//           currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
+//       </ul>
+//     </div>
+//   );
+// }
 
 
-const style={
-   /* position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)'*/
-   backgroundColor: 'rgb(0, 188, 212)'
+const style = {
+    /* position: 'absolute',
+     left: '50%',
+     top: '50%',
+     transform: 'translate(-50%, -50%)'*/
+    backgroundColor: 'rgb(0, 188, 212)'
 };
 
