@@ -4,7 +4,7 @@ import {Link} from "@material-ui/core";
 import {useState} from "react";
 import {useEffect} from "react";
 
-const Logout = (props) => {
+const Logout = () => {
 
 
     // constructor(props) {
@@ -18,23 +18,23 @@ const Logout = (props) => {
     //     };
     // }
 
-    const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState('');
+    // const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+    // const [showAdminBoard, setShowAdminBoard] = useState(false);
+    // const [currentUser, setCurrentUser] = useState('');
 
 
 
-    useEffect(() =>{
-        const user = AuthService.getCurrentUser()
-        if (user) {
+    // useEffect(() =>{
+    //     const user = AuthService.getCurrentUser()
+    //     if (user) {
 
-                setCurrentUser(user);
-                setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-                setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+    //             setCurrentUser(user);
+    //             setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+    //             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
 
-        }
+    //     }
 
-    });
+    // });
 
     // componentDidMount() {
     //     const user = AuthService.getCurrentUser();
